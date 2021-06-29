@@ -1,0 +1,11 @@
+{
+  "name": "microredservidor",
+  "version": "1.0.0",
+  "description": "API para el cliente de Administrador de Proyectos y Tareas Microred",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Marco Antonio Carrillo Osuna",
+  "license": "ISC"
+}
