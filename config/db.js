@@ -7,7 +7,8 @@ const conectarDB = async () =>{
             //config para ara algunos errores
             useNewUrlParser: true,
             useUnifiedTopology: true,
-            useFindAndModify: false
+            useFindAndModify: false,
+            useCreateIndex: true
         });
         console.log('DB conectada')
     } catch (error) {
