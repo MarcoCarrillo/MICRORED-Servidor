@@ -2,8 +2,15 @@
 //Exports para poder usarla en otros archivos y como parametro se le pasa el request y la response (peticion y respuesta)
 const Usuario = require('../models/Usuario');
 const bcryptjs = require('bcryptjs');
+const { validationResult } = require('express-validator'); //Para saber el resultado de la validacion que esta en routes
 
 exports.crearUsuario = async (req, res) =>{
+
+    //Revisar si hay errores
+    const errores = validationResult(req); //req retorna un array
+    if( !errores.isEmpty()){ //revisa que el arreglo no este vacio, porque si esta vacio significa que no hay errores
+        return res.status(400).json({errores: errores.array()}) //Si hay un error va mostrar un array con el mensaje de error que puse en la ruta correspondiente
+    }
 
     //Extraemos el email y password
     const {email, password} = req.body;
