@@ -1,6 +1,7 @@
 const UsuarioEmpresa = require('../models/UsuarioEmpresa');
 const bcryptjs = require('bcryptjs');
 const { validationResult } = require('express-validator');
+const jwt = require('jsonwebtoken');
 
 exports.crearUsuarioEmpresa = async (req, res) =>{
     
@@ -28,7 +29,21 @@ exports.crearUsuarioEmpresa = async (req, res) =>{
         usuarioEmpresa.password = await bcryptjs.hash(password, salt);
 
         await usuarioEmpresa.save();
-        res.json({ msg: 'Usuario empresarial creado correctamente' });
+
+        //Crear y firmar el jwt
+        const payload = { 
+            usuarioEmpresa:{
+                id: usuarioEmpresa.id
+            }
+        };
+        //Firma
+        jwt.sign(payload, process.env.SECRETA,{
+            expiresIn: 18000 //5 horas
+        },(error, token) =>{
+            if(error) throw error;
+            res.json({ token }); 
+        })
+
         console.log(req.body); 
     } catch (error) {
         console.log(error);

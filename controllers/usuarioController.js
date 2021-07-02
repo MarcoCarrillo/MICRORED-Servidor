@@ -1,9 +1,11 @@
 //Funciones llamadas entre el proceso de la peticion y el envio de la respuesta (Middleware)
-//Exports para poder usarla en otros archivos y como parametro se le pasa el request y la response (peticion y respuesta)
 const Usuario = require('../models/Usuario');
 const bcryptjs = require('bcryptjs');
 const { validationResult } = require('express-validator'); //Para saber el resultado de la validacion que esta en routes
+const jwt = require('jsonwebtoken'); //En react no existen las sesiones y el fin de jwt es compartir info entre aplicaciones en un objeto json, verifica autenticidad cuando el user se loguea y se verifica para que pueda acceder a los demas recursos
 
+
+//Exports para poder usarla en otros archivos y como parametro se le pasa el request y la response (peticion y respuesta)
 exports.crearUsuario = async (req, res) =>{
 
     //Revisar si hay errores
@@ -34,8 +36,24 @@ exports.crearUsuario = async (req, res) =>{
         //guardar el usuario
         await usuario.save();
 
-        //Mensaje de confirmacion
-        res.json({ msg: 'Usuario creado correctamente' });
+        //Crear y firmar el jwt
+        const payload = { //Como payload ira el id de usuario
+            usuario:{
+                id: usuario.id
+            }
+        };
+
+        //Firmar el jwt
+        jwt.sign(payload, process.env.SECRETA, { //Toma el id de usuario, la palabra secreta con la ue va firmar el token
+            expiresIn: 7200 //2 horas
+        }, (error, token) =>{ //callback para revisar si hay un error al crear el token
+            if(error) throw error; //Marque el error y deje de ejecutar esa parte
+            //Retornar el token 
+            res.json({ token }); 
+        })
+
+
+        
     } catch (error) {
         console.log(error)
         res.status(400).send('Hubo un error'); //Status 400 es una bad request o una peticion mal
