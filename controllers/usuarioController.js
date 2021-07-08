@@ -1,4 +1,4 @@
-//Funciones llamadas entre el proceso de la peticion y el envio de la respuesta (Middleware)
+//Funciones llamadas entre el proceso de la peticion y el envio de la respuesta 
 const Usuario = require('../models/Usuario');
 const bcryptjs = require('bcryptjs');
 const { validationResult } = require('express-validator'); //Para saber el resultado de la validacion que esta en routes
