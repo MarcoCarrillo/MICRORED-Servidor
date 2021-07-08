@@ -1,6 +1,14 @@
 const Proyecto = require('../models/Proyecto');
+const {validationResult} = require('express-validator');
 
 exports.crearProyecto = async (req, res) => {
+
+    //Resultado de la validacion del check de ruta
+    //Revisar si hay errores
+    const errores = validationResult(req); //req retorna un array con los errores
+    if( !errores.isEmpty()){ //revisa que el arreglo no este vacio, porque si esta vacio significa que no hay errores
+        return res.status(400).json({errores: errores.array()}) //Si hay un error va mostrar un array con el mensaje de error que puse en la ruta correspondiente
+    }
 
     try {
         //Crear un proyecto
