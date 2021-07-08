@@ -18,6 +18,12 @@ router.post('/', //verifica todo lo del middleware de auth primero y una vez que
 router.get('/',
     auth,
     proyectoController.obtenerProyectos
+);
+
+//Eliminar un proyecto
+router.delete('/:id',
+    auth,
+    proyectoController.eliminarProyecto
 )
 
 module.exports = router;
