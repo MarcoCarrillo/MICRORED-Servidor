@@ -16,7 +16,7 @@ module.exports = function(req, res, next){
 
     try {
         const cifrado = jwt.verify(token, process.env.SECRETA); //Este metodo verifica el token cifrado
-        req.usuario = cifrado.usuario; //creamos un nuevo objeto en el req llamado usuario y como cuando creamos un usuario le pasamos el id del mismo ahora podemos acceder al id desde el nuevo objeto del req
+        req.usuario = cifrado.usuario; //Una vez que este atenticado se tiene la info de ese usuario //creamos un nuevo objeto en el req llamado usuario y como cuando creamos un usuario le pasamos el id del mismo ahora podemos acceder al id desde el nuevo objeto del req
         next(); //Para que se vaya al siguiente middleware
     } catch (error) {
         res.status(401).json({ msg: 'Token no valido'});

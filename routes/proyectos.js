@@ -14,9 +14,10 @@ router.post('/', //verifica todo lo del middleware de auth primero y una vez que
     proyectoController.crearProyecto
 );
 
+//Obtener los proyectos del usuario que está autenticado
 router.get('/',
     auth,
-    proyectoController.crearProyecto
+    proyectoController.obtenerProyectos
 )
 
 module.exports = router;
