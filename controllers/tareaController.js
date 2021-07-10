@@ -62,6 +62,49 @@ exports.obtenerTareas = async (req, res)=>{
         const tareas = await Tarea.find({proyecto}); //donde sea igual al proyecto que se extrajo
         res.json({tareas});
 
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Hubo un error')
+    }
+}
+
+//Actualizar una tarea
+exports.actualizarTarea = async (req, res)=>{
+    try {
+
+         //Extraer el proyecto, nombre y estado de la tarea y comprobar si existe
+        const {proyecto, nombre, fecha, estado} = req.body; 
+
+        //Si la tarea existe
+        // console.log(req.params.id);
+        let tarea = await Tarea.findById(req.params.id);
+        if(!tarea){
+            return res.status(404).json({msg: 'No existe esa tarea'});
+        }
+
+        //Revisar si el proyecto existe
+        const existeProyecto = await Proyecto.findById(proyecto);
+    
+        //Revisar si el proyecto actual pertenece al usuario autenticado
+        //verificar el creador del proyecto
+        if(existeProyecto.creador.toString() !== req.usuario.id ){
+            return res.status(401).json({msg: 'No autorizado'});
+        }
+
+        //Crear objeto con la nueva info
+        const nuevaTarea={};
+        //Si quiere cambiar el nombre de la tarea
+        if (nombre) nuevaTarea.nombre = nombre;
+        
+        //Si quiere cambiar la fecha de la tarea
+        if(fecha) nuevaTarea.fecha = fecha;
+        
+        //Si quiere cambiar el estado
+        if(estado) nuevaTarea.estado = estado;
+
+        //Guardar la tarea
+        tarea = await Tarea.findOneAndUpdate({_id : req.params.id}, nuevaTarea, {new: true});
+        res.json({tarea})
 
     } catch (error) {
         console.log(error);
