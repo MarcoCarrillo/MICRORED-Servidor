@@ -3,11 +3,17 @@ const express = require('express');
 //Importar conectarDB
 const conectarDB = require('./config/db');
 
+//CORS
+const cors = require('cors');
+
 //Crear el servidor
 const app = express();
 
 //Conectar a la db
 conectarDB();
+
+//Habilitar CORS
+app.use(cors());
 
 //Habilitar express.json para las solicitudes de POST y reconoce que es .json el objeto del request, se pueden hacer los requests con content-type: application.json desde headers en postman
 app.use(express.json({extends: true}));
