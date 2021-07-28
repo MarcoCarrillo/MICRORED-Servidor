@@ -95,17 +95,17 @@ exports.actualizarTarea = async (req, res)=>{
         //Crear objeto con la nueva info
         const nuevaTarea={};
         //Si quiere cambiar el nombre de la tarea
-        if (nombre) nuevaTarea.nombre = nombre;
+        nuevaTarea.nombre = nombre;
         
         //Si quiere cambiar la fecha de la tarea
-        if(fecha) nuevaTarea.fecha = fecha;
+        nuevaTarea.fecha = fecha;
         
         //Si quiere cambiar el estado
-        if(estado) nuevaTarea.estado = estado;
+        nuevaTarea.estado = estado;
 
         //Guardar la tarea
         tarea = await Tarea.findOneAndUpdate({_id : req.params.id}, nuevaTarea, {new: true});
-        res.json({tarea})
+        res.json({tarea});
 
     } catch (error) {
         console.log(error);

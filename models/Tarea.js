@@ -7,7 +7,7 @@ const TareaSchema = mongoose.Schema({
         trim: true
     },
     fecha:{
-        type: Date,
+        type: String,
         required: true
     },
     estado:{
