@@ -13,7 +13,7 @@ const app = express();
 conectarDB();
 
 //Habilitar CORS
-app.use(cors());
+app.use(cors({ credentials: true, origin: true }));
 
 //Habilitar express.json para las solicitudes de POST y reconoce que es .json el objeto del request, se pueden hacer los requests con content-type: application.json desde headers en postman
 app.use(express.json({extends: true}));
@@ -26,16 +26,6 @@ app.use('/api/usuarios', require('./routes/usuarios'));
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/proyectos', require('./routes/proyectos'));
 app.use('/api/tareas', require('./routes/tareas'));
-
-//Cors
-// Configurar cabeceras y cors
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
-    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
-    res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
-    next();
-});
 
 
 //Arrancar el servidor
