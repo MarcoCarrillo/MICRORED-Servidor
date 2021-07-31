@@ -22,10 +22,8 @@ app.use(express.json({extends: true}));
 const PORT = process.env.PORT || 4000;
 
 //Importar rutas
-app.use('/api/usuariosMicrored', require('./routes/usuariosEmpresa'));
 app.use('/api/usuarios', require('./routes/usuarios'));
 app.use('/api/auth', require('./routes/auth'));
-app.use('/api/authEmpresa', require('./routes/authEmpresa'));
 app.use('/api/proyectos', require('./routes/proyectos'));
 app.use('/api/tareas', require('./routes/tareas'));
 
