@@ -13,13 +13,14 @@ const app = express();
 conectarDB();
 
 //Habilitar CORS
-app.use(cors({ credentials: true, origin: 'https://microred-proyectos.netlify.app/' }));
+app.use(cors({ credentials: true, origin: true }));
+app.options("*", cors());
 
 //Habilitar express.json para las solicitudes de POST y reconoce que es .json el objeto del request, se pueden hacer los requests con content-type: application.json desde headers en postman
 app.use(express.json({extends: true}));
 
 //Si hay puerto en variable de entorno tomar ese si no el puerto 4000
-const port = process.env.port || 4000;
+const port = process.env.PORT || 4000;
 
 //Importar rutas
 app.use('/api/usuarios', require('./routes/usuarios'));
