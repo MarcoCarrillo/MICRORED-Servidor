@@ -13,7 +13,7 @@ const app = express();
 conectarDB();
 
 //Habilitar CORS
-app.use(cors({ credentials: true, origin: true }));
+app.use(cors({ credentials: true, origin: 'https://microred-proyectos.netlify.app/' }));
 
 //Habilitar express.json para las solicitudes de POST y reconoce que es .json el objeto del request, se pueden hacer los requests con content-type: application.json desde headers en postman
 app.use(express.json({extends: true}));
